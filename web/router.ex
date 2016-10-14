@@ -16,15 +16,9 @@ defmodule Trello.Router do
     plug Guardian.Plug.LoadResource
   end
 
-  scope "/", Trello do
-    pipe_through :browser # Use the default browser stack
-
-    get "/*path", PageController, :index
-  end
-
   scope "/api", Trello do
     pipe_through :api
-
+    
     scope "/v1" do
       post "/registrations", RegistrationController, :create
 
@@ -33,5 +27,11 @@ defmodule Trello.Router do
 
       get "/current_user", CurrentUserController, :show
     end
+  end
+
+  scope "/", Trello do
+    pipe_through :browser # Use the default browser stack
+
+    get "/*path", PageController, :index
   end
 end

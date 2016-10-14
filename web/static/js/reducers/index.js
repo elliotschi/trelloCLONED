@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import registrations from './registrations'
-
-const session = () => ({currentUser: null, socket: null, error: null})
+import session from './session'
 
 export default combineReducers({
   routing: routerReducer,

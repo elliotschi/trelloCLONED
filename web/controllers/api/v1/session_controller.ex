@@ -6,7 +6,7 @@ defmodule Trello.SessionController do
   def create(conn, %{"session" => session_params}) do
     case Trello.Session.authenticate(session_params) do
       {:ok, user} ->
-        {:ok, jwt, _full_claims} = Guardian.encode_and_sign(:token)
+        {:ok, jwt, _full_claims} = user |> Guardian.encode_and_sign(:token)
 
         conn
         |> put_status(:created)
@@ -17,6 +17,17 @@ defmodule Trello.SessionController do
         |> put_status(:unprocessable_entity)
         |> render("error.json")
     end
+  end
+
+  def delete(conn, _) do
+    {:ok, claims} = Guardian.Plug.claims(conn)
+
+    conn
+    |> Guardian.Plug.current_token
+    |> Guardian.revoke!(claims)
+
+    conn
+    |> render("delete.json")
   end
 
   def unauthenticated(conn, _params) do

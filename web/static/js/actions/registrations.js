@@ -10,7 +10,7 @@ export const signUp = (user) => ({
 })
 
 export const signUpSuccess = ({ jwt }) => {
-  browserHistory.push('/')
+  // browserHistory.push('/')
 
   return {
     type: actions.REGISTRATIONS_SIGNUP_SUCCESS,

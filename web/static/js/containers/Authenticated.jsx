@@ -1,24 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { routeActions } from 'redux-simple-router'
+// import { routeActions } from 'redux-simple-router'
+import { browserHistory } from 'react-router'
 import { getCurrentUser } from 'actions/sessions'
 import Header from 'layouts/Header'
 
 class Authenticated extends React.Component {
   componentDidMount() {
-    const { getCurrentUser, routePush } = this.props
+    const { getCurrentUser, routePush, currentUser } = this.props
     const authToken = localStorage.getItem('authToken')
 
     if (authToken && !currentUser) {
       // set current user manually
       getCurrentUser()
     } else if (!authToken) {
-      routePush('/sign_in')
+      browserHistory.push('/sign_in')
     }
   }
 
   render() {
-    const { currentUser, dispatch } = this.props
+    const { currentUser } = this.props
 
     if (!currentUser) return null
 
@@ -26,7 +27,6 @@ class Authenticated extends React.Component {
       <div className="application-container">
         <Header
           currentUser={currentUser}
-          dispatch={dispatch}
         />
 
         <div className="main-container">
@@ -37,8 +37,8 @@ class Authenticated extends React.Component {
   }
 }
 
-const mapStateToProps = ({ session: { currentUser }}) => ({
+const mapStateToProps = ({ session: { currentUser } }) => ({
   currentUser
 })
 
-export default connect(mapStateToProps, { getCurrentUser, routePush: routeActions.push })(Authenticated)
+export default connect(mapStateToProps, { getCurrentUser })(Authenticated)

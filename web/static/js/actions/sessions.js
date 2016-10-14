@@ -10,8 +10,6 @@ export const signIn = (session) => ({
 })
 
 export const signInSuccess = ({ jwt }) => {
-  browserHistory.push('/')
-
   return {
     type: actions.SESSIONS_SIGNIN_SUCCESS,
     jwt
@@ -23,12 +21,12 @@ export const signInError = ({ errors }) => obsOf({
   errors
 })
 
-// sign out action creators
+// sign outaction creators
 export const signOut = () => ({
   type: actions.SESSIONS_SIGNOUT,
   url: '/api/v1/sessions'
 })
-
+ 
 export const signOutSuccess = () => ({
   type: actions.SESSIONS_SIGNOUT_SUCCESS
 })
@@ -58,9 +56,9 @@ export const getCurrentUserSuccess = () => ({
 })
 
 export const getCurrentUserError = () => {
-  browserHistory.push('/sign_in')
+  // browserHistory.push('/sign_in')
 
-  return {
+  return obsOf({
     type: actions.SESSIONS_GET_CURRENT_USER_ERROR
-  }
+  })
 }

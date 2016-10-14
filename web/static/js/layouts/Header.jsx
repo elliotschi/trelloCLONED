@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import * as actions from 'actions/sessions'
 import ReactGravatar from 'react-gravatar'
@@ -9,7 +10,7 @@ class Header extends React.Component {
   }
 
   renderCurrentUser = () => {
-    const { currentUser: { first_name, last_name, email } } = this.props
+    const { currentUser: { first_name, last_name, email }, currentUser } = this.props
 
     if (!currentUser) return null
 
@@ -27,7 +28,7 @@ class Header extends React.Component {
     if (!this.props.currentUser) return null
 
     return (
-      <a href="#" onClick={handleSignOutClick}>
+      <a href="#" onClick={this.handleSignOutClick}>
         <i className="fa fa-sign-out" />
         Sign out
       </a>
@@ -67,4 +68,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header
+export default connect()(Header)

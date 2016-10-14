@@ -1,5 +1,6 @@
-import * as actions from 'actions/actionTypes'
+import * as actions from 'constants/actionTypes'
 import { isLoading, isSuccess } from 'utils/api'
+import { browserHistory } from 'react-router'
 
 const initialState = {
   currentUser: null,
@@ -11,7 +12,7 @@ const initialState = {
   isSuccess: {
     signIn: false
   }
-};
+}
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
@@ -41,6 +42,7 @@ export default (state = initialState, action = {}) => {
       return isLoading(state, 'signOut')
 
     case actions.SESSIONS_SIGNOUT_SUCCESS:
+      localStorage.removeItem('authToken')
       return initialState
 
     case actions.SESSIONS_SIGNOUT_ERROR:
