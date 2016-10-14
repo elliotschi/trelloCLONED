@@ -1,10 +1,10 @@
-defmodule GuardianSerializer do
+defmodule Trello.GuardianSerializer do
   @behaviour Guardian.Serializer
 
   alias Trello.{Repo, User}
 
   def for_token(user = %User{}) do
-    {:ok, "User.#{user.id}"}
+    {:ok, "User:#{user.id}"}
   end
 
   def for_token(_), do: {:error, "Unknown resource type"}

@@ -9,11 +9,11 @@ class RegistrationsNew extends React.Component {
     super(props)
 
     this.state = {
-      firstName: '',
-      lastName: '',
+      first_name: '',
+      last_name: '',
       email: '',
       password: '',
-      passwordConfirmation: ''
+      password_confirmation: ''
     }
   }
 
@@ -34,7 +34,7 @@ class RegistrationsNew extends React.Component {
   }
 
   handleBlur = field => value => {
-    this.setState({ field: value })
+    this.setState({ [field]: value })
   }
 
   handleError = field => () => {
@@ -43,9 +43,9 @@ class RegistrationsNew extends React.Component {
 
   render() {
     const {
-      firstName, lastName,
+      first_name, last_name,
       email, password,
-      passwordConfirmation
+      password_confirmation
     } = this.state
     const { errors } = this.props
 
@@ -58,20 +58,20 @@ class RegistrationsNew extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <div className="field">
               <Input
-                initialValue={firstName}
-                onBlur={this.handleBlur('firstName')}
-                onError={this.handleError('firstName')}
+                initialValue={first_name}
+                onBlur={this.handleBlur('first_name')}
+                onError={this.handleError('first_name')}
                 inputProps={{...this.baseInputProps, type: 'text', placeholder: 'first name'}}
-                error={errors.firstName}
+                error={errors.first_name}
               />
             </div>
             <div className="field">
               <Input
-                initialValue={lastName}
-                onBlur={this.handleBlur('lastName')}
-                onError={this.handleError('lastName')}
+                initialValue={last_name}
+                onBlur={this.handleBlur('last_name')}
+                onError={this.handleError('last_name')}
                 inputProps={{...this.baseInputProps, type: 'text', placeholder: 'last name'}}
-                error={errors.lastName}
+                error={errors.last_name}
               />
             </div>
             <div className="field">
@@ -94,11 +94,11 @@ class RegistrationsNew extends React.Component {
             </div>
             <div className="field">
               <Input
-                initialValue={passwordConfirmation}
-                onBlur={this.handleBlur('passwordConfirmation')}
-                onError={this.handleError('passwordConfirmation')}
+                initialValue={password_confirmation}
+                onBlur={this.handleBlur('password_confirmation')}
+                onError={this.handleError('password_confirmation')}
                 inputProps={{...this.baseInputProps, type: 'password', placeholder: 'confirm your password'}}
-                error={errors.passwordConfirmation}
+                error={errors.password_confirmation}
               />
             </div>
             <button type="submit">Sign up</button>

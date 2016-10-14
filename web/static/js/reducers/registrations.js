@@ -1,12 +1,12 @@
-import * as actions from 'actions/actionTypes'
+import * as actions from 'constants/actionTypes'
 
 const initialState = {
   errors: {
-    firstName: false,
-    lastName: false,
+    first_name: false,
+    last_name: false,
     email: false,
     password: false,
-    passwordConfirmation: false
+    password_confirmation: false
   },
   isLoading: {
     signUp: false
@@ -62,5 +62,8 @@ export default (state = initialState, action = {}) => {
           [action.key]: action.error
         }
       }
+
+    default:
+      return state
   }
 }
