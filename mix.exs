@@ -39,7 +39,9 @@ defmodule Trello.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:guardian, "~> 0.13.0"},
-     {:comeonin, "~> 2.5.3"}]
+     {:comeonin, "~> 2.5.3"},
+     {:mix_test_watch, "~> 0.2", only: :dev},
+     {:hound, "~> 1.0.2"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
