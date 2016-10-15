@@ -2,6 +2,8 @@
 
 This is a project that is following this [guide](http://codeloveandboards.com/blog/2016/01/04/trello-tribute-with-phoenix-and-react-pt-1/) as a guideline, but also using it as a sandbox to use webpack 2 and other technologies
 
+Check out the react js code [here](https://github.com/elliotschi/trelloCLONED/tree/master/web/static/js)
+
 To start your Phoenix app:
 
   * Install dependencies with `mix deps.get`
