@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import { createEpicMiddleware } from 'redux-observable'
+import thunkMiddleware from 'redux-thunk'
 import reducers from 'reducers'
 import epics from 'epics'
 
@@ -12,7 +13,8 @@ export default browserHistory => {
 
   let middleware = [
     reduxRouterMiddleware,
-    epicMiddleware
+    epicMiddleware,
+    thunkMiddleware
   ]
 
   const store = createStore(

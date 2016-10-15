@@ -3,10 +3,12 @@ defmodule Trello.UserSocket do
 
   ## Channels
   # channel "room:*", Trello.RoomChannel
+  channel "users:*", Trello.UserChannel
+  channel "boards:*", Trello.BoardChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
-  # transport :longpoll, Phoenix.Transports.LongPoll
+  transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -19,9 +21,9 @@ defmodule Trello.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
-  end
+  # def connect(_params, socket) do
+  #   {:ok, socket}
+  # end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
@@ -33,5 +35,23 @@ defmodule Trello.UserSocket do
   #     Trello.Endpoint.broadcast("users_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
-  def id(_socket), do: nil
+  # def id(_socket), do: nil
+
+  def connect(%{"token" => token}, socket) do
+    case Guardian.decode_and_verify(token) do
+      {:ok, claims} ->
+        case Trello.GuardianSerializer.from_token(claims["sub"]) do
+          {:ok, user} ->
+            {:ok, assign(socket, :current_user, user)}
+          {:error, _reason} ->
+            :error
+        end
+      {:error, _reason} ->
+        :error
+    end
+  end
+
+  def connect(_params, _socket), do: :error
+
+  def id(socket), do: "user_socket:#{socket.assigns.current_user.id}"
 end

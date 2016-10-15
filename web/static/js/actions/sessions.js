@@ -1,6 +1,6 @@
 import * as actions from 'constants/actionTypes'
 import { of as obsOf } from 'rxjs/observable/of'
-import { browserHistory } from 'react-router'
+// import { browserHistory } from 'react-router'
 
 // sign in action creators
 export const signIn = (session) => ({
@@ -62,3 +62,25 @@ export const getCurrentUserError = () => {
     type: actions.SESSIONS_GET_CURRENT_USER_ERROR
   })
 }
+
+export const socketConnected = (socket, channel) => ({
+  type: actions.SESSIONS_SOCKET_CONNECTED,
+  socket,
+  channel
+})
+
+// export const setUserAndSocket = () => {
+//   const socket = new Socket('/socket', {
+//     params: {
+//       token: localStorage.getItem('authToken')
+//     }
+//   })
+
+//   socket.connect()
+
+//   const channel = socket.channel(`users:${user.id}`)
+
+//   channel.join().receive('ok', () => {
+//     socketConnected(socket, channel)
+//   })
+// }

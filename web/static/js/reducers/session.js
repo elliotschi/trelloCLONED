@@ -4,6 +4,8 @@ import { browserHistory } from 'react-router'
 
 const initialState = {
   currentUser: null,
+  socket: null,
+  channel: null,
   error: null,
   isLoading: {
     signIn: false,
@@ -21,6 +23,13 @@ export default (state = initialState, action = {}) => {
         ...state,
         currentUser: action.currentUser,
         error: null
+      }
+
+    case actions.SESSIONS_SOCKET_CONNECTED:
+      return {
+        ...state,
+        socket: action.socket,
+        channel: action.socket
       }
 
     case actions.SESSIONS_SIGNIN:
