@@ -8,7 +8,9 @@ defmodule Trello.BoardView do
   end
 
   def render("show.json", %{board: board}) do
-    board
+    %{
+      board: board
+    }
   end
 
   def render("error.json", %{changeset: changeset}) do

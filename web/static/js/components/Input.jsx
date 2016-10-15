@@ -15,8 +15,8 @@ class Input extends React.Component {
 
   componentDidMount() {
     const { validate, onError, onBlur } = this.props
-
-    this.onBlur$ = fromEvent(this.input, 'blur')
+    // using keydown so we don't have to blur out every time
+    this.onBlur$ = fromEvent(this.input, 'keydown')
       .map(e => {
         if (e.target.checkValidity()) {
           return e.target.value
