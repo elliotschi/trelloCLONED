@@ -9,6 +9,9 @@ defmodule Trello.Board do
     field :name, :string
     belongs_to :user, Trello.User
 
+    has_many :user_boards, Trello.UserBoard
+    has_many :members, through: [:user_boards, :user]
+
     timestamps()
   end
 

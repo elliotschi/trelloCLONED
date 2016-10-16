@@ -18,16 +18,21 @@ defmodule Trello.BoardController do
 
     changeset = current_user |> build_assoc(:owned_boards) |> Board.changeset(board_params)
 
-    case Repo.insert(changeset) do
-      {:ok, board} ->
-        conn
-        |> put_status(:created)
-        |> render("show.json", board: board)
+    if changeset.valid? do
+      board = Repo.insert!(changeset)
 
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render("error.json", changeset: changeset)
+      board
+      |> build_assoc(:user_boards)
+      |> UserBoard.changeset(%{user_id: current_user.id})
+      |> Repo.insert!
+
+      conn
+      |> put_status(:created)
+      |> render("show.json", board: board)
+    else
+      conn
+      |> put_status(:unprocessable_entity)
+      |> render("error.json", changeset: changeset)
     end
   end
 end
