@@ -14,6 +14,7 @@ defmodule Trello do
       supervisor(Trello.Endpoint, []),
       # Start your own worker by calling: Trello.Worker.start_link(arg1, arg2, arg3)
       # worker(Trello.Worker, [arg1, arg2, arg3]),
+      worker(Trello.BoardChannel.Monitor, [%{}])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

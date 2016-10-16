@@ -12,10 +12,10 @@ defmodule Trello.UserBoard do
   @optional_fields ~w()
 
   @doc """
-  Builds a changeset based on the `struct` and `params`.
+  Builds a changeset based on the `model` and `params`.
   """
-  def changeset(struct, params \\ %{}) do
-    struct
+  def changeset(model, params \\ %{}) do
+    model
     |> cast(params, @required_fields, @optional_fields)
     |> unique_constraint(:user_id, name: :users_boards_user_id_board_id_index)
   end

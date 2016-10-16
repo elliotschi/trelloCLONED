@@ -51,7 +51,7 @@ class Input extends React.Component {
 
   componentWillReceiveProps({ error, value }) {
     if (error) {
-      this.state({ error })
+      this.setState({ error })
     }
 
     if (value) {

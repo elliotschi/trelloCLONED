@@ -6,7 +6,15 @@ import PageClick from 'react-page-click'
 import * as actions from 'actions/current_board'
 
 class BoardMembers extends React.Component {
-  renderUsers = () => this.props.members.map(({ email, id}) => {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      email: ''
+    }
+  }
+
+  renderUsers = () => this.props.members.map(({ email, id }) => {
     const connected = this.props.connectedUsers.filter(user => user === id).length > 0
 
     const classes = cx({
@@ -22,7 +30,7 @@ class BoardMembers extends React.Component {
     return (
       <li>
         <a
-          onClick={this.handleAddNewClick}
+          onClick={this.handleClick(true)}
           className="add-new"
           href="#"
         >
@@ -36,19 +44,29 @@ class BoardMembers extends React.Component {
   renderForm = () => {
     if (!this.props.show) return false
 
+    const { email } = this.state
+
     return (
-      <PageClick onClick={this.handleCancelClick}>
+      <PageClick onClick={this.handleClick(false)}>
         <ul className="drop-down active">
           <li>
             <form onSubmit={this.handleSubmit}>
               <h4>Add new members</h4>
               {this.renderError()}
-              <Input />
+              <Input
+                initialValue={email}
+                onBlur={(email) => this.setState({ email })}
+                inputProps={{
+                  required: true,
+                  type: 'email',
+                  placeholder: 'Member email'
+                }}
+              />
               <button type="submit">
                 Add member
               </button> or 
               <a
-                onClick={this.handleCancelClick}
+                onClick={this.handleClick(false)}
                 href="#"
               >
                 cancel
@@ -57,6 +75,39 @@ class BoardMembers extends React.Component {
           </li>
         </ul>
       </PageClick>
+    )
+  }
+
+  renderError = () => {
+    const { error } = this.props
+
+    if (!error) return false
+
+    return (
+      <div className="error">
+        {error} 
+      </div>
+    )
+  }
+
+  handleClick = (show) => (e) => {
+    this.props.dispatch(actions.showMembersForm(show))
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    const { email } = this.state
+    const { dispatch, channel } = this.props
+
+    dispatch(actions.addNewMember(channel, email))
+  }
+
+  render() {
+    return (
+      <ul className="board-users">
+        {this.renderUsers()}
+        {this.renderAddNewUser}
+      </ul>
     )
   }
 }

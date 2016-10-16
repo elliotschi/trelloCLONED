@@ -17,3 +17,4 @@ erl_crash.dump
 .idea
 node_modules
 priv/static/js/app.js
+priv/static/css/app.css

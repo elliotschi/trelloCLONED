@@ -47,7 +47,7 @@ class BoardForm extends React.Component {
             >
               <Input
                 initialValue={name}
-                onBlur={(val) => this.setState({ name: val})}
+                onBlur={(name) => this.setState({ name })}
                 error={formErrors.name}
                 inputProps={{
                   required: true,
