@@ -3,6 +3,13 @@ defmodule Trello.BoardChannel do
   alias Trello.{UserBoard}
   alias Trello.BoardChannel.Monitor
 
+  def terminate(_reason, socket) do
+    board_id = Board.slug_id(socket.assigns.board)
+    user_id = socket.assigns.current_user.id
+
+    broadcast!(socket, "user:left", %{users: Monitor.member_left(board_id, user_id)})
+  end
+
   def join("boards:" <> board_id, _params, socket) do
     current_user = socket.assigns.current_user
     board = get_current_board(socket, board_id)

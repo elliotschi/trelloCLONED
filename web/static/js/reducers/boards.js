@@ -55,7 +55,7 @@ export default (state = initialState, action = {}) => {
 
     case actions.BOARDS_CREATE_BOARD_SUCCESS:
       return isSuccess(state, 'createBoard', {
-        ownedBoards: [action.board, ...ownedBoards]
+        ownedBoards: [action.board, ...state.ownedBoards]
       })
 
     case actions.BOARDS_CREATE_BOARD_ERROR:

@@ -61,7 +61,9 @@ const connectWebSocket = action$ => {
       socket.connect()
 
       channel = socket.channel(`users:${user.id}`)
-      const boundFn = bindCallback(channel.join().receive.bind(channel))
+      const boundFn = bindCallback(channel.join().receive)
+
+      // channel.on('boards:add', ({ board }) => dispatch board)
 
       return boundFn('ok')
     })

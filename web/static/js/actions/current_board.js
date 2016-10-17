@@ -1,4 +1,5 @@
 import * as actions from 'constants/actionTypes'
+import { of as obsOf } from 'rxjs/observable/of'
 
 export const getCurrentBoard = (socket, boardId) => ({
   type: actions.CURRENT_BOARD_GET,
@@ -11,7 +12,7 @@ export const getCurrentBoardSuccess = ({ board }) => ({
   board
 })
 
-export const getCurrentBoardError = ({ error }) => ({
+export const getCurrentBoardError = ({ error }) => obsOf({
   type: actions.CURRENT_BOARD_GET_ERROR,
   error
 })
@@ -36,7 +37,21 @@ export const addNewMemberSuccess = () => ({
   type: actions.CURRENT_BOARD_ADD_NEW_MEMBER_SUCCESS
 })
 
-export const addNewMemberError = ({ error }) => ({
+export const addNewMemberError = ({ error }) => obsOf({
   type: actions.CURRENT_BOARD_ADD_NEW_MEMBER_ERROR,
   error
 })
+
+export const newMemberAdded = ({ user }) => ({
+  type: actions.CURRENT_BOARD_NEW_MEMBER_ADDED,
+  user
+})
+
+export const connectedUsers = ({ users }) => ({
+  type: actions.CURRENT_BOARD_CONNECTED_USERS,
+  users
+})
+
+export const leaveChannel = (channel) => {
+  channel.leave()
+}

@@ -84,3 +84,8 @@ export const socketConnected = (socket, channel) => ({
 //     socketConnected(socket, channel)
 //   })
 // }
+
+export const boardsAdded = ({ board }) => ({
+  type: actions.BOARDS_ADDED,
+  board
+})

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
 import { of as obsOf } from 'rxjs/observable/of'
 
+// @TODO: use publish to account for multiple events
 const getCurrentBoard = action$ => (
   action$.ofType(actionTypes.CURRENT_BOARD_GET)
     .map(({ socket, boardId }) => {
@@ -12,6 +13,9 @@ const getCurrentBoard = action$ => (
 
       const boundFn = bindCallback(channel.join().receive)
       return boundFn('ok')
+      // channel.on('members:added', ({ user }) => dispatch user)
+      // channel.on('user:joined', ({ user })) => dispatch user
+      // channel.on('user:left', ({ users })) => dispatch new users
     })
     .map((response) => obsOf(
       currentBoardActions.getCurrentBoardSuccess(response),
@@ -20,4 +24,14 @@ const getCurrentBoard = action$ => (
     .catch(() => currentBoardActions.getCurrentBoardError)
 )
 
-export default [getCurrentBoard]
+const addNewMember = action$ => (
+  action$.ofType(actionTypes.CURRENT_BOARD_ADD_NEW_MEMBER)
+    .map(({ channel, email }) => {
+      const boundFn = channel.push('members:add', { email }).receive
+      return boundFn('error')
+    })
+    .map(currentBoardActions.addNewMemberError)
+    .do(currentBoardActions.addNewMemberSuccess)
+)
+
+export default [getCurrentBoard, addNewMember]

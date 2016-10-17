@@ -3,7 +3,12 @@ import * as actions from 'constants/actionTypes'
 const initialState = {
   channel: null,
   isLoading: true,
-  error: false
+  error: false,
+  connectedUsers: [],
+  showForm: false,
+  showUsersForm: false,
+  editingListId: null,
+  addingNewCardInListId: null
 }
 
 export default (state = initialState, action = {}) => {
@@ -32,6 +37,26 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         channel: action.channel
+      }
+
+    case actions.CURRENT_BOARD_SHOW_MEMBERS_FORM:
+      return {
+        ...state,
+        showUsersForm: action.show,
+        error: false
+      }
+
+    case actions.CURRENT_BOARD_ADD_NEW_MEMBER_ERROR:
+      return {
+        ...state,
+        error: action.error
+      }
+
+    case actions.CURRENT_BOARD_NEW_MEMBER_ADDED:
+      return {
+        ...state,
+        members: [...members, action.user],
+        showUsersForm: false
       }
 
     default:
